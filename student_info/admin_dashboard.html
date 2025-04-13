@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body { font-family: Arial; background-color: #f1f5f9; text-align: center; padding: 40px; }
+        input, select, button { margin: 5px; padding: 8px; }
+        table { margin: 20px auto; border-collapse: collapse; width: 80%; }
+        th, td { border: 1px solid #ccc; padding: 10px; }
+    </style>
+</head>
+<body>
+
+    <h2>Filter and Sort Student Records (CGPA)</h2>
+
+    <form id="filterForm">
+        Degree (CGPA): <input type="text" name="degree"><br>
+        Diploma: <input type="text" name="diploma"><br>
+        12th: <input type="text" name="mark_12"><br>
+        10th: <input type="text" name="mark_10"><br>
+
+        Sort by:
+        <select name="sort_by">
+            <option value="degree">degree</option>
+            <option value="diploma">diploma</option>
+            <option value="mark_12">mark_12</option>
+            <option value="mark_10">mark_10</option>
+        </select>
+
+        Direction:
+        <select name="direction">
+            <option value="ASC">Ascending</option>
+            <option value="DESC">Descending</option>
+        </select>
+
+        <button type="submit">Filter & Sort</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById("filterForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+
+            fetch("filter_sort.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById("result").innerHTML = data;
+            });
+        });
+    </script>
+
+</body>
+</html>
